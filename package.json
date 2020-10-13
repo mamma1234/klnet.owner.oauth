@@ -1,0 +1,23 @@
+{
+  "name": "klnet.owner.oauth",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ls"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "crypto": "^1.0.1",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.4",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0"
+  }
+}
