@@ -1,0 +1,20 @@
+html
+    head
+        title='login'
+        meta(charset='utf-8')
+    body
+        u1#account
+            form#login-form(action='/oauth/authorize', method='post')
+                p   
+                    input(type='text', name='id', placeholder='id')
+                p
+                    input(type='password', name='pw', placeholder='password')
+                p
+                    input(type='submit', value='LOG IN')
+                input(type='hidden', name='client_id',  value=client_id)
+                input(type='hidden', name='redirect_uri',  value=redirect_uri)
+                input(type='hidden', name='response_type',  value=response_type)
+                input(type='hidden', name='state',  value=state)
+            form(action='/oauth/logout', method='post')
+                p
+                    input(type='submit', value='LOG OUT')
