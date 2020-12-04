@@ -19,6 +19,8 @@ const jwt = require('jsonwebtoken');
 const requestIp = require('request-ip');
 const useragent = require('express-useragent');
 const { Client } = require('pg');
+// const { response } = require('express');
+// const http = require('http');
 
 app.use(flash()); //connect-flash: 일회성 메시지들을 웹 브라우저에 나타낼 때 사용한다. cookie-parser와 express-session 뒤에 위치해야한다.
 
@@ -276,9 +278,30 @@ app.post('/oauth/authorize', (req, res, next) => {
             // return res.json({user:user, token:user.token});
 
             console.log("5. req.body.redirect_uri:",req.body.redirect_uri);
+            const redirect_uri = req.body.redirect_uri + '?code=' + user.token + '&state=12345';
+            // res.status(response.statusCode).send({"access_token":"1231231321231"});
+            res.header('Authorization', user.token);
+            return res.redirect(redirect_uri);
 
-            return res.redirect(req.body.redirect_uri);
+            // const options = {
+            //     host:'localhost',
+            //     port:5000,
+            //     path:'/auth/klnet/callback'
+            // };
+            // http.get(options, function(resp) {
+            //     const body = 'abcdefg';
+            //     resp.on('data', function(chunk) {
+            //         body += chunk;
+            //     });
+            //     resp.on('end', function() {
+            //         console.log('body=', body);
+            //     });
+            // }).on('error', function(e) {
+            //     console.log("error:" + e.message);
+            // })
+            // next();
 
+            // reqeust.post({url:'http://localhost:5000/auth/klnet/callback', form:'data'});
         }
         
     })(req, res, next)  //미들웨어 내의 미들웨어에는 (req, res, next)를 붙인다.
@@ -394,11 +417,20 @@ app.post('/oauth/logout',  (req, res) => {
 
 
 
-app.get('/oauth/', (req, res) => {
+app.get('/oauth', (req, res) => {
     res.render('index', {
         title: 'Klnet Oauth2.0',
         message: 'Hello!'
     });
+});
+
+
+app.get('/oauth/index.html', (req, res) => {
+    res.redirect('/oauth');
+});
+
+app.get('/oauth/index', (req, res) => {
+    res.redirect('/oauth');
 });
 
 app.get('/oauth/join', (req, res) => {
