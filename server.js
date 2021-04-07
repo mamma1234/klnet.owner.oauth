@@ -52,7 +52,8 @@ const client = new Client({
     connectionString: connectionString
 });
 
-client.connect();
+// client.connect();
+
 // passport.serializeUser(function (user, done) { // 로그인 성공 시 콜백 함수 호출
 //     console.log('[SerializeUser]', user); 
 //     //req.session.passport.user 에 저장
@@ -150,6 +151,19 @@ passport.use('local',new LocalStrategy({
     console.log(inputpassword)
     try {
         
+
+        const token = jwt.sign({userno:"M000005"}, JWT_SECRET_KEY, { expiresIn : '1h', });
+        sUser.provider = 'local';
+        sUser.userid = id;
+        sUser.userno = "M000005";
+        sUser.username = "판토스";
+        sUser.displayName = 'web';
+        sUser.email = "null";
+        sUser.usertype = 'O';
+        sUser.token = token;
+        done(null, sUser);
+
+
         // console.log(req.url, req.baseUrl, req.fullUrl);
         // const row = getUser(id);
         // console.log('row', row);
