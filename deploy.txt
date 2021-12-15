@@ -1,0 +1,2 @@
+# 2021-09-15 updated by jsong 13:00
+views/join.ejs

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="google" content="notranslate">
+        <!-- <link rel="stylesheet" type="text/css" href="/css/fonts.css"/> -->
+        <link rel="stylesheet" type="text/css" href="/css/mui.css"/>
+        <link rel="stylesheet" type="text/css" href="/css/styleOauth.css"/>
+        <title>Klnet Oauth2.0</title>
+    </head>
+    <body>
+        <div id="mui-overlay1">
+            <section class="login__content">
+                <h2 class="login__title" > 
+                    <a href = <%=klnetUrl %>>
+                    <img
+                    src="/images/logo.png"
+                    alt="logo"
+                    width="auto"
+                    style="margin-left: 43px;"
+                    ></a></h2>
+                <div class="login__body">
+                    <form class="mui-form join-form" id="login-form" action="/oauth/authorize" method="post">
+                    <!-- <form class="mui-form join-form" id="login-form" action="/oauth/login" method="post"> -->
+                        <input type="hidden" name="client_id" value=<%=client_id %>>
+                        <input type="hidden" name="redirect_uri" value=<%=redirect_uri %>>
+                        <input type="hidden" name="response_type" value=<%=response_type %>>
+                        <input type="hidden" name="state" value=<%=state %>>
+                        <div class="mui-textfield">
+                            <!-- 에러인 경우 input에 mui--is-not-empty mui--is-untouched mui--is-pristine 클래스 추가
+                            <input type="text" class="mui--is-not-empty mui--is-untouched mui--is-pristine"
+                            required> -->
+                            <input type="text" name="id" id='id' class="mui--is-empty mui--is-untouched mui--is-pristine" 
+                             style='text-transform: uppercase;'
+                            required/>
+                            <label>아이디</label>
+                            <!-- 에러인 경우 validate--error 클래스 추가-->
+                            <!-- <strong class="validate ">아이디가 존재하지 않습니다.</strong> -->
+                        </div>
+                        <div class="mui-textfield">
+                            <input type="password" name="pw" class="mui--is-empty mui--is-untouched mui--is-pristine" required>
+                            <label>패스워드</label>
+                            <div style='height:30px;'>
+                                <%if(message){ %>
+                                    <strong class="validate validate--error" id='validate--error'><%=message %></strong>
+                                    <%} %>
+                              </div>
+                        </div>
+                        <!-- <div class="mui-checkbox">
+                            <label>
+                              <input type="checkbox" name="loginState">
+                              로그인 상태를 유지합니다.
+                            </label>
+                          </div> -->
+                          <!-- <div style='height:20px; background-color:yellow'>
+                            <%if(message){ %>
+                                <strong class="validate validate--error" id='validate--error'><%=message %></strong>
+                                <%} %>
+                          </div> -->
+                        <div class="login__submit">
+                            <button type="submit" value="LOG IN" class="btn btn__primary is-large btn__login" onclick='changeToUpperCase()'>
+                                로그인
+                            </button>
+                        </div>
+                        
+                    </form>
+
+                    <div class="use-account__between">
+                        <a href=<%=klnetUrl +'/authpage/register' %> class="btn btn__text"> 회원가입</a>
+                        <a href=<%=klnetUrl +'/authpage/findinfo?code=0' %> class="btn btn__text"> 아이디 찾기</a>
+                        <a href=<%=klnetUrl +'/authpage/findinfo?code=1' %> class="btn btn__text"> 패스워드 찾기</a>
+                    </div>
+                    <div class="use-account">
+                        <div class="use-account__center">
+                            <p class="text" style="color:#8e8e8e">SNS계정으로 간편 로그인 / 회원가입</p>
+                        </div>
+                        <div class="sns-list">
+                        <a class="" href="https://kauth.kakao.com/oauth/authorize?client_id=0b6d98316119442e856dd2ad7497df14&redirect_uri=http://booking.plism.com/auth/kakao/callback&response_type=code&state=12345" style="padding: 5px;">
+                            <img src="/images/kakao.png" alt="kakaosns" width="50" height="50"></a>
+                        <a class="" href="https://nid.naver.com/oauth2.0/authorize?client_id=5vSPppBEGLWEwMT8p9kZ&redirect_uri=https://booking.plism.com/auth/naver/callback&response_type=code&state=12345" style="padding: 5px;">
+                            <img src="/images/naver.png" alt="naversns" width="50" height="50"></a>
+                        <a class="" href="https://www.facebook.com/v5.0/dialog/oauth?client_id=184064786168643&redirect_uri=https://booking.plism.com/auth/facebook/callback&response_type=code&state=12345" style="padding: 5px;">
+                            <img src="/images/face.png" alt="facebooksns" width="50" height="50"></a>
+                        <a class="" href="https://accounts.google.com/o/oauth2/v2/auth?client_id=684197542136-kkba8s7e8a1l6pnqdio46vgdgkfkhsmn.apps.googleusercontent.com&redirect_uri=https://booking.plism.com/auth/google/callback&response_type=code&scope=profile&state=12345" style="padding: 5px;">
+                            <img src="/images/google.png" alt="googlesns" width="50" height="50"></a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <script type='text/javascript' defer>
+            var validateError = "<%=message %>";
+            var id = document.getElementById('id');
+            if(validateError){
+                // id.classList.replace('mui--is-empty','mui--is-not-empty');
+                id.focus();
+            }
+            function changeToUpperCase(){
+                var text = document.getElementById('id').value;
+                var capitalizeID = text.toUpperCase();
+                document.getElementById('id').value=capitalizeID;
+            }
+            window.onkeydown=function(){
+                var kcode = event.keyCode;
+                if(kcode ==116){
+                    history.replayceState({},null,location.pathname)
+                }
+            }
+            console.log(window.location.href)
+        </script>
+    </body>        
+</html>
